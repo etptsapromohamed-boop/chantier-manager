@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:chantier_manager/src/features/teams/presentation/team_management_screen.dart';
 import 'package:chantier_manager/src/features/teams/presentation/group_management_screen.dart';
 import 'package:chantier_manager/src/features/settings/presentation/settings_screen.dart';
+import 'package:chantier_manager/src/features/planning/presentation/planning_screen.dart';
+import 'package:chantier_manager/src/features/finance/presentation/finance_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -64,9 +66,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
       case 2:
         return const GroupManagementScreen();
       case 3:
-        return _buildPlaceholder("Planning Chantier", Icons.calendar_today);
+        return const PlanningScreen();
       case 4:
-        return _buildPlaceholder("Suivi Financier", Icons.euro);
+        return const FinanceScreen();
       case 5:
         return const SettingsScreen();
       default:
