@@ -334,6 +334,7 @@ class _TasksTabState extends ConsumerState<TasksTab> {
           taskData['supervisor'] = supervisor;
         }
       }
+      */
     }
 
     return filtered;
