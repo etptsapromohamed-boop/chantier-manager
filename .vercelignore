@@ -1,0 +1,24 @@
+# Ignore Flutter/Dart build artifacts not needed for web deployment
+.dart_tool/
+.packages
+.pub/
+build/ios/
+build/android/
+build/linux/
+build/macos/
+build/windows/
+android/
+ios/
+linux/
+macos/
+windows/
+test/
+
+# Ignore git files
+.git/
+.gitignore
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.iml
