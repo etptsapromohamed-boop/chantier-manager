@@ -308,11 +308,15 @@ class _TasksTabState extends ConsumerState<TasksTab> {
     for (var taskData in filtered) {
       final task = taskData['task'] as Task;
       
+      // TODO: Implement task assignments table
       // Query assignments
-      final assignments = await (db.select(db.taskAssignments)
-            ..where((t) => t.taskId.equals(task.id)))
-          .get();
+      // final assignments = await (db.select(db.taskAssignments)
+      //       ..where((t) => t.taskId.equals(task.id)))
+      //     .get();
 
+      taskData['team'] = null; // Placeholder until assignments table is created
+
+      /*
       if (assignments.isNotEmpty) {
         // Get work group details
         final groupId = assignments.first.groupId;
@@ -355,7 +359,7 @@ class _TasksTabState extends ConsumerState<TasksTab> {
       'foundation': Icons.foundation,
       'roofing': Icons.roofing,
       'window': Icons.window,
-      'door_front': Icons.door_front,
+      'door_front': Icons.door_sliding,
     };
 
     return iconMap[iconName] ?? Icons.task_alt;
@@ -560,7 +564,7 @@ class _TaskCard extends StatelessWidget {
       'foundation': Icons.foundation,
       'roofing': Icons.roofing,
       'window': Icons.window,
-      'door_front': Icons.door_front,
+      'door_front': Icons.door_sliding,
     };
 
     return iconMap[iconName] ?? Icons.task_alt;
@@ -684,11 +688,16 @@ class _AssignTeamDialogState extends ConsumerState<_AssignTeamDialog> {
     final db = ref.read(appDatabaseProvider);
 
     try {
+      // TODO: Implement task assignments table
       // Check if assignment already exists
-      final existing = await (db.select(db.taskAssignments)
-            ..where((t) => t.taskId.equals(widget.task.id)))
-          .get();
+      // final existing = await (db.select(db.taskAssignments)
+      //       ..where((t) => t.taskId.equals(widget.task.id)))
+      //     .get();
 
+      // Placeholder: Direct work group assignment to task
+      final repository = ref.read(planningRepositoryProvider);
+      
+      /*
       if (existing.isNotEmpty) {
         // Update existing
         await (db.update(db.taskAssignments)
@@ -705,6 +714,14 @@ class _AssignTeamDialogState extends ConsumerState<_AssignTeamDialog> {
               ),
             );
       }
+      */
+      
+      // For now, update the task's assignedGroupId directly
+      await (db.update(db.tasks)
+            ..where((t) => t.id.equals(widget.task.id)))
+          .write(TasksCompanion(
+        assignedGroupId: drift.Value(_selectedTeam!.id),
+      ));
 
       if (mounted) {
         Navigator.pop(context, true);

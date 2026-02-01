@@ -14,6 +14,7 @@ class PlanningScreen extends ConsumerStatefulWidget {
 class _PlanningScreenState extends ConsumerState<PlanningScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String? _selectedProjectId;
 
   @override
   void initState() {
@@ -44,11 +45,17 @@ class _PlanningScreenState extends ConsumerState<PlanningScreen>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          OrganizationTab(),
-          _GanttTab(),
-          _TasksTab(),
-          _ReportsTab(),
+        children: [
+          OrganizationTab(
+            onProjectSelected: (projectId) {
+              setState(() {
+                _selectedProjectId = projectId;
+              });
+            },
+          ),
+          const _GanttTab(),
+          TasksTab(projectId: _selectedProjectId),
+          const _ReportsTab(),
         ],
       ),
     );
@@ -73,28 +80,6 @@ class _GanttTab extends ConsumerWidget {
           ),
           SizedBox(height: 8),
           Text('Timeline visuelle interactive'),
-        ],
-      ),
-    );
-  }
-}
-
-  const _TasksTab();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.task, size: 64, color: Colors.grey),
-          SizedBox(height: 16),
-          Text(
-            'Gestion Tâches',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8),
-          Text('Avec équipes assignées'),
         ],
       ),
     );

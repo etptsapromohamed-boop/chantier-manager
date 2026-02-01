@@ -8,8 +8,13 @@ import 'package:drift/drift.dart' as drift;
 /// Displays Project → Ilots → Blocs → Tasks in expandable tree format
 class OrganizationTab extends ConsumerStatefulWidget {
   final String? projectId;
+  final Function(String?)? onProjectSelected;
 
-  const OrganizationTab({super.key, this.projectId});
+  const OrganizationTab({
+    super.key,
+    this.projectId,
+    this.onProjectSelected,
+  });
 
   @override
   ConsumerState<OrganizationTab> createState() => _OrganizationTabState();
@@ -87,6 +92,7 @@ class _OrganizationTabState extends ConsumerState<OrganizationTab> {
                   setState(() {
                     _selectedProjectId = project.id;
                   });
+                  widget.onProjectSelected?.call(project.id);
                 },
               ),
             )),

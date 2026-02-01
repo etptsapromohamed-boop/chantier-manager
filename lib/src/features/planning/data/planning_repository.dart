@@ -75,6 +75,19 @@ class PlanningRepository {
     await (_db.delete(_db.blocs)..where((t) => t.id.equals(id))).go();
   }
 
+  /// Get all blocs for a project (through ilots)
+  Future<List<Bloc>> getBlocsByProject(String projectId) async {
+    final ilots = await getIlotsByProject(projectId);
+    final List<Bloc> allBlocs = [];
+    
+    for (final ilot in ilots) {
+      final blocs = await getBlocsByIlot(ilot.id);
+      allBlocs.addAll(blocs);
+    }
+    
+    return allBlocs;
+  }
+
   // ========== TASK CATEGORIES ==========
 
   /// Get all task categories
